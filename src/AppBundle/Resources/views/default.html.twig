@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title of the document</title>
+</head>
+
+<body>
+<h1>Posts</h1>
+{% if app.user %}
+    <div>
+        <a href="{{ url('add_new_post') }}">Add new post</a>
+    </div>
+{% else %}
+    <div>
+        <a href="{{ url('fos_user_security_login') }}">Login</a>
+    </div>
+    <div>
+        <a href="{{ url('fos_user_registration_register') }}">Register</a>
+    </div>
+{% endif %}
+{% for post in posts %}
+    <div>
+        <h4>{{ post.title }}</h4>
+        <p>
+            {{ post.body }}
+        </p>
+    </div>
+{% endfor %}
+</body>
+
+</html>
