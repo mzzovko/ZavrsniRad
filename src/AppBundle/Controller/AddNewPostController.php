@@ -26,7 +26,7 @@ class AddNewPostController extends Controller
         if(empty($user)){
             throw new AccessDeniedException();
         }
-        
+
         $post = new Post();
 
         $form = $this->createForm(PostFormType::class, $post);
@@ -40,7 +40,7 @@ class AddNewPostController extends Controller
             return $this->redirectToRoute('homepage');
         }
 
-        return $this->render('@App/add-new-question.html.twig', [
+        return $this->render('@App/add-new-post.html.twig', [
             'form' => $form->createView(),
         ]);
 
