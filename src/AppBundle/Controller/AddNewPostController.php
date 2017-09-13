@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class AddNewPostController extends Controller
 {
@@ -18,8 +19,14 @@ class AddNewPostController extends Controller
      * @Route("/add-new-post", name="add_new_post")
      * @return RedirectResponse|Response
      */
-    private function addNewPostAction(Request $request)
+    public function addNewPostAction(Request $request)
     {
+        $user = $this->getUser();
+
+        if(empty($user)){
+            throw new AccessDeniedException();
+        }
+
         $post = new Post();
 
         $form = $this->createForm(PostFormType::class, $post);
@@ -33,7 +40,7 @@ class AddNewPostController extends Controller
             return $this->redirectToRoute('homepage');
         }
 
-        return $this->render('@App/add-new-question.html.twig', [
+        return $this->render('@App/add-new-post.html.twig', [
             'form' => $form->createView(),
         ]);
 
